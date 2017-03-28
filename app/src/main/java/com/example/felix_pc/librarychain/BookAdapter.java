@@ -78,18 +78,20 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 Log.d("Block size in Adapter ", String.valueOf(i));
                 Log.d("Position in Adapter ", String.valueOf(position));
                 Log.d("getTrans in Adapter ", String.valueOf(books.get(i).first.getTransactions().size()));
+                Log.d("i", String.valueOf(i));
+
+
+
                 TextView textView = holder.nameTextView;
                 TextView datetextView = holder.dateTextView;
                 TextView onwertextView = holder.ownerTextView;
                 TextView idtextVIew = holder.idTextView;
             int j = position % 2;
-
-             textView.setText("Book Name : " + books.get(i).first.getTransactions().get(j).first.getBookName());
-             datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(j).first.getDate());
-             onwertextView.setText("Book Owner : " + books.get(i).first.getTransactions().get(j).first.getOwner());
-             idtextVIew.setText("Book id : " + String.valueOf(books.get(i).first.getTransactions().get(j).first.getId()));
-
-
+        Log.d("position", String.valueOf(position));
+             textView.setText("Book Name : " + books.get(i).first.getTransactions().get(position).first.getBookName());
+             datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(position).first.getDate());
+             onwertextView.setText("Book Owner : " + books.get(i).first.getTransactions().get(position).first.getOwner());
+             idtextVIew.setText("Book id : " + String.valueOf(books.get(i).first.getTransactions().get(position).first.getId()));
     }
 
     @Override
