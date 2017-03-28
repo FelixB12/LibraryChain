@@ -18,11 +18,10 @@ public class MainActivity extends AppCompatActivity {
     public Button mConfirm;
     public EditText mBookName;
     public EditText mBookOwner;
+    public BookAdapter adapter;
     int id = 0;
     Blockchain chain = new Blockchain();
     RSA key = new RSA(1024);
-    Transaction[] tx = new Transaction[500];
-    ArrayList<Pair<Block, BigInteger>> read;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 AddBook(view);
             }
         });
+        adapter = new BookAdapter(this,chain.ReadChain());
+
+        RecyclerView rBooks = (RecyclerView) findViewById(R.id.rBooks);
+
+        rBooks.setAdapter(adapter);
+
+        rBooks.setLayoutManager(new LinearLayoutManager(this));
+
     }
         public void AddBook(View view){
             final View mView = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_book, null);
@@ -47,14 +54,11 @@ public class MainActivity extends AppCompatActivity {
             mConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tx[id] = new Transaction(String.valueOf(mBookOwner.getText()),String.valueOf(mBookName.getText()),id);
-                    chain.AddTransaction(tx[id],key);
-                    read = chain.ReadChain();
-                    ListView();
-                    Log.d("Block size : ", String.valueOf(read.size()));
+                    chain.AddTransaction(new Transaction(String.valueOf(mBookOwner.getText()),String.valueOf(mBookName.getText()),id),key);
+                    adapter.updateData(chain.ReadChain());
+                    Log.d("Block size : ", String.valueOf(chain.ReadChain().size()));
                     id++;
                     dialog.dismiss();
-
                 }
             });
             mCancel.setOnClickListener(new View.OnClickListener() {
@@ -65,11 +69,5 @@ public class MainActivity extends AppCompatActivity {
             });
             dialog.show();
         }
-        public void ListView(){//this function calls the adapter to update view every time a book gets added
-            BookAdapter adapter = new BookAdapter(this,read);
-            adapter.notifyDataSetChanged();
-            RecyclerView rBooks = (RecyclerView) findViewById(R.id.rBooks);
-            rBooks.setAdapter(adapter);
-            rBooks.setLayoutManager(new LinearLayoutManager(this));
-        }
+
 }

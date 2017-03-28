@@ -50,10 +50,10 @@ public class Blockchain
             BigInteger signature = rsa.sign(block);
             Pair<Block, Object> signedBlock = new Pair<Block, Object>(block, signature);
 
-            Chain.remove(block);
+            Chain.remove(Chain.size()-1);
             Chain.add(signedBlock);
             //If i enable Chain.add(new Pair<>(new Block(signature), null)); it removes the first 2 blocks and shows the third
-            //Chain.add(new Pair<>(new Block(signature), null));
+            Chain.add(new Pair<>(new Block(signature), null));
 
             block = GetCurrentBlock();
         }
