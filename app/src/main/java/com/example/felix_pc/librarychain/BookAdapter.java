@@ -73,7 +73,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public void onBindViewHolder(BookAdapter.ViewHolder holder, int position) {
         //pos = position;
         //update count
-        int i = books.size() - 1;
+        int i = position / 2;
                 //Above might be not correct.
                 Log.d("Block size in Adapter ", String.valueOf(i));
                 Log.d("Position in Adapter ", String.valueOf(position));
@@ -82,10 +82,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 TextView datetextView = holder.dateTextView;
                 TextView onwertextView = holder.ownerTextView;
                 TextView idtextVIew = holder.idTextView;
-                textView.setText("Book Name : " + books.get(i).first.getTransactions().get(position).first.getBookName());
-                datetextView.setText("Date Added : " +books.get(i).first.getTransactions().get(position).first.getDate());
-                onwertextView.setText("Book Owner : "+books.get(i).first.getTransactions().get(position).first.getOwner());
-                idtextVIew.setText("Book id : " +String.valueOf(books.get(i).first.getTransactions().get(position).first.getId()));
+            int j = position % 2;
+
+             textView.setText("Book Name : " + books.get(i).first.getTransactions().get(j).first.getBookName());
+             datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(j).first.getDate());
+             onwertextView.setText("Book Owner : " + books.get(i).first.getTransactions().get(j).first.getOwner());
+             idtextVIew.setText("Book id : " + String.valueOf(books.get(i).first.getTransactions().get(j).first.getId()));
 
 
     }
