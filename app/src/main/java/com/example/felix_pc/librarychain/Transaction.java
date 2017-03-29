@@ -10,7 +10,7 @@ public class Transaction {
     private String date;
     private String BookOwner;
     private String BookName;
-    private ArrayList bookOwner;
+    private ArrayList bookOwner = new ArrayList();
     private int id;
     /**
      * Get current time in human-readable form.
@@ -30,13 +30,18 @@ public class Transaction {
         this.BookOwner = BookOwner;
         this.id = id;
         this.BookName = BookName;
+        bookOwner.add(BookOwner);
     }
 
     //array list
     public void setBookOwner(String Owner){
+        BookOwner = Owner;
         bookOwner.add(Owner);
     }
 
+    public ArrayList getOwnerList(){
+        return bookOwner;
+    }
 
 
     public String getBookID() {

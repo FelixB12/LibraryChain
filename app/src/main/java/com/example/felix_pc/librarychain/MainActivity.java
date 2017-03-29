@@ -58,11 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 0; i < chain.ReadChain().size() ;i++) {
                     for(int j = 0; j < chain.ReadChain().get(i).first.Length(); j++) {
                         if (String.valueOf(mBookName) == chain.ReadChain().get(i).first.getTransactions().get(j).first.getBookName()){
-                            //Dieses if checked ob dort ein gleicher owner ist, wie can man das updates in the list??
+                            chain.ReadChain().get(i).first.getTransactions().get(j).first.setBookOwner(String.valueOf(mBookOwner));
                             check = 1;
+                            return;
                         }
                     }
                 }
+
                 if(check ==0) {
                     chain.AddTransaction(new Transaction(String.valueOf(mBookOwner.getText()), String.valueOf(mBookName.getText()), id), key);
                     adapter.updateData(chain.ReadChain());

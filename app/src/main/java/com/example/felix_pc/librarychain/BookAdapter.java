@@ -77,7 +77,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public void onBindViewHolder(BookAdapter.ViewHolder holder, final int position) {
         //pos = position;
         //update count
-        int i = position / 2;
+        final int i = position / 2;
         //Above might be not correct.
         Log.d("Block size in Adapter ", String.valueOf(i));
         Log.d("Position in Adapter ", String.valueOf(position));
@@ -89,7 +89,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         TextView datetextView = holder.dateTextView;
         TextView onwertextView = holder.ownerTextView;
         TextView idtextVIew = holder.idTextView;
-        int j = position % 2;
+        final int j = position % 2;
         Log.d("j", String.valueOf(j));
         textView.setText("Book Name : " + books.get(i).first.getTransactions().get(j).first.getBookName());
         datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(j).first.getDate());
@@ -100,7 +100,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             public void onClick(View v) {
                 Toast.makeText(mContext, "Clicked " + position, Toast.LENGTH_LONG).show();
 
-                showBookHistory();
+                showBookHistory(i,j);
 
             }
         });
@@ -127,7 +127,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void showBookHistory() {
+    public void showBookHistory(int i, int j) {
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
         final View mView = LayoutInflater.from(mContext).inflate(R.layout.book_history, null);
 
@@ -135,6 +135,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
+
+
 
 
         mCancel.setOnClickListener(new View.OnClickListener() {
