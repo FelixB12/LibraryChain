@@ -8,12 +8,15 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Felix-PC on 2017-03-23.
@@ -93,7 +96,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         Log.d("j", String.valueOf(j));
         textView.setText("Book Name : " + books.get(i).first.getTransactions().get(j).first.getBookName());
         datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(j).first.getDate());
-        onwertextView.setText("Book Owner : " + books.get(i).first.getTransactions().get(j).first.getOwner());
+        onwertextView.setText("Current Owner : " + books.get(i).first.getTransactions().get(j).first.getOwner());
         idtextVIew.setText("Book id : " + String.valueOf(books.get(i).first.getTransactions().get(j).first.getId()));
         holder.bookView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +139,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
 
-
+        ArrayList bookHistory = books.get(i).first.getTransactions().get(j).first.getOwnerList();
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, bookHistory);
+        ListView listView = (ListView) mView.findViewById(R.id.bookHistoryListView);
+        listView.setAdapter(itemsAdapter);
 
 
         mCancel.setOnClickListener(new View.OnClickListener() {
