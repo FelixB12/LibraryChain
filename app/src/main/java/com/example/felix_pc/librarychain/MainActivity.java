@@ -57,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 int check = 0;
                 for(int i = 0; i < chain.ReadChain().size() ;i++) {
                     for(int j = 0; j < chain.ReadChain().get(i).first.Length(); j++) {
-                        if (String.valueOf(mBookName) == chain.ReadChain().get(i).first.getTransactions().get(j).first.getBookName()){
-                            chain.ReadChain().get(i).first.getTransactions().get(j).first.setBookOwner(String.valueOf(mBookOwner));
+                        if (String.valueOf(mBookName.getText()).equals(chain.ReadChain().get(i).first.getTransactions().get(j).first.getBookName())){
+                            chain.ReadChain().get(i).first.getTransactions().get(j).first.setBookOwner(String.valueOf(mBookOwner.getText()));
                             check = 1;
+                            adapter.notifyDataSetChanged();
+                            dialog.dismiss();
                             return;
                         }
                     }
