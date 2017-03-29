@@ -101,7 +101,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.bookView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Clicked " + position, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, "Clicked " + position, Toast.LENGTH_LONG).show();
 
                 showBookHistory(i,j);
 
