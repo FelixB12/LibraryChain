@@ -30,7 +30,6 @@ public class Transaction {
         this.BookOwner = BookOwner;
         this.id = id;
         this.BookName = BookName;
-        setBookOwner(BookOwner);
     }
 
     //array list
