@@ -1,12 +1,16 @@
 package com.example.felix_pc.librarychain;
 import android.annotation.TargetApi;
 import android.text.format.Time;
+
+import java.util.ArrayList;
+
 public class Transaction {
 
     private String BookID;
     private String date;
     private String BookOwner;
     private String BookName;
+    private ArrayList bookOwner;
     private int id;
     /**
      * Get current time in human-readable form.
@@ -21,12 +25,21 @@ public class Transaction {
         String sTime = now.format("%Y_%m_%d %T");
         return sTime;
     }
-    public Transaction(String BookOwner,String BookName, int id){
+    public Transaction(String BookOwner, String BookName, int id){
         date = getNow();
         this.BookOwner = BookOwner;
         this.id = id;
         this.BookName = BookName;
+        setBookOwner(BookOwner);
     }
+
+    //array list
+    public void setBookOwner(String Owner){
+        bookOwner.add(Owner);
+    }
+
+
+
     public String getBookID() {
         return BookID;
     }
