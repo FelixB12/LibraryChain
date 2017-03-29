@@ -1,6 +1,7 @@
 package com.example.felix_pc.librarychain;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     int pos = 0;
 
+    ArrayList<Pair<Block, BigInteger>> books;
+    public static Context mContext;
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -29,6 +34,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         public TextView ownerTextView;
         public TextView dateTextView;
         public TextView idTextView;
+        public View bookView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -36,7 +42,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
+            bookView = itemView;
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
             ownerTextView = (TextView) itemView.findViewById(R.id.book_owner);
             dateTextView = (TextView) itemView.findViewById(R.id.date_added);
@@ -45,8 +51,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
 
-    ArrayList<Pair<Block, BigInteger>> books;
-    private Context mContext;
 
     public BookAdapter(Context context, ArrayList<Pair<Block, BigInteger>> book) {
         books = book;
@@ -72,7 +76,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BookAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(BookAdapter.ViewHolder holder, final int position) {
         //pos = position;
         //update count
         int i = position / 2;
@@ -81,6 +85,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         Log.d("Position in Adapter ", String.valueOf(position));
         Log.d("getTrans in Adapter ", String.valueOf(books.get(i).first.getTransactions().size()));
         Log.d("i", String.valueOf(i));
+
 
 
         TextView textView = holder.nameTextView;
@@ -93,6 +98,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         datetextView.setText("Date Added : " + books.get(i).first.getTransactions().get(j).first.getDate());
         onwertextView.setText("Book Owner : " + books.get(i).first.getTransactions().get(j).first.getOwner());
         idtextVIew.setText("Book id : " + String.valueOf(books.get(i).first.getTransactions().get(j).first.getId()));
+        holder.bookView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Clicked " + position, Toast.LENGTH_LONG).show();
+
+                showBookHistory();
+
+            }
+        });
     }
 
     @Override
@@ -115,5 +129,27 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public void updateData(ArrayList<Pair<Block, BigInteger>> newBook) {
         books = newBook;
         notifyDataSetChanged();
+    }
+    public void showBookHistory(){
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
+        final View mView = LayoutInflater.from(mContext).inflate(R.layout.book_history, null);
+
+
+        Button mCancel = (Button) mView.findViewById(R.id.cancelButton);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+
+
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "Canceled", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
